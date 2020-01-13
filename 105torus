@@ -1,0 +1,111 @@
+#!/usr/bin/python3
+
+from math import *
+import math
+import sys
+
+def usage():
+    print("USAGE")
+    print("    ./105torus opt a0 a1 a2 a3 a4 n\n")
+    print("DESCRIPTION")
+    print("    opt             method option:")
+    print("                        1 for the bisection method")
+    print("                        2 for Newton’s method")
+    print("                        3 for the secant method")
+    print("    a[0-4]    coefficients of the equation")
+    print("    n         precision (the application of the polynomial to the solution should be smaller than 10ˆ-n)")
+    exit (0)
+
+
+def bisection(a0, a1, a2, a3, a4, n):
+    x1 = float(0)
+    x2 = float(1)
+    x3 = float(0)
+    x4 = float(0)
+    xm = float(0)
+    i = int(1)
+
+    while i < 300:
+        xm = (x1 + x2) / 2
+        if i <= n:
+            print(f"x = {i} {xm}")
+        else:
+            print(f"x = {n} {xm:.6f}")
+        x3 = (a4 * pow(xm, 4)) + (a3 * pow(xm, 3)) + (a2 * pow(xm, 2)) + (a1 * xm) + a0
+        x4 = (a4 * pow(x1, 4)) + (a3 * pow(x1, 3)) + (a2 * pow(x1, 2)) + ((a1 * x1) + a0)
+        if (x4 * x3) < 0:
+            x2 = xm
+        else:
+            x1 = xm
+        if round(x1 * pow(10, n)) == round(x2 * pow(10, n)):
+            break
+        i += 1
+
+def newton (a0, a1, a2, a3, a4, n):
+    xn2 = float(0.5)
+    x1 = float(0)
+    x2 = float(0)
+    xn = float(0)
+    i = int(1)
+
+    while i < 300:
+        x1 = (a4 * pow(xn2, 4)) + (a3 * pow(xn2, 3)) + (a2 * pow(xn2, 2)) + ((a1 * xn2) + a0)
+        x2 = (4 * (a4 * pow(xn2, 3))) + (3 * (a3 * pow(xn2, 2))) + (2 * a2 * xn2) + a1
+        if x2 == 0:
+            exit (84)
+        xn = xn2 - (x1 / x2)
+        if round(xn2 * pow(10,n)) == round(xn * pow(10,n)):
+            break
+        if i == 1:
+            print(f"x = {xn:.1f}")
+        print(f"x = {xn:.12f}")
+        xn2 = xn
+        i += 1
+
+
+def secante(a0, a1, a2, a3, a4, n):
+    x1 = float(0)
+    x2 = float(1)
+    x3 = float(0)
+    x4 = float(0)
+    xn = float(0)
+    i = int(1)
+
+    while i < 300:
+        if round(x1 * pow(10, n)) == round(x2 * pow(10, n)):
+            break
+        x3 = (a4 * pow(x1, 4)) + (a3 * pow(x1, 3)) + (a2 * pow(x1, 2)) + (a1 * x1) + a0
+        x4 = (a4 * pow(x2, 4)) + (a3 * pow(x2, 3)) + (a2 * pow(x2, 2)) + (a1 * x2) + a0
+        if (x4 - x3) == 0:
+            exit(84)
+        xn = x2 - (x4 * (x2 - x1) / (x4 - x3))
+        if i == 1:
+            print(f"x = {xn:.1f}")
+        else:
+            print(f"x = {xn:.8f}")
+        x1 = x2
+        x2 = xn
+        i += 1
+
+if __name__ == "__main__":
+
+    if len(sys.argv) == 2 and sys.argv[1][0] == '-' and sys.argv[1][1] == 'h':
+        usage()
+    if len(sys.argv) != 8:
+        exit(84)
+    opt = int(sys.argv[1])
+    a0 = int(sys.argv[2])
+    a1 = int(sys.argv[3])
+    a2 = int(sys.argv[4])
+    a3 = int(sys.argv[5])
+    a4 = int(sys.argv[6])
+    n = int(sys.argv[7])
+
+    if opt != 1 and opt != 2 and opt != 3:
+        exit(84)
+    if opt == 1:
+        bisection(a0, a1, a2, a3, a4, n)
+    if opt == 2:
+        newton(a0, a1, a2, a3, a4, n)
+    if opt == 3:
+        secante(a0, a1, a2, a3, a4, n)
