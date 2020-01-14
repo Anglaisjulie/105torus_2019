@@ -89,24 +89,26 @@ def secante(a0, a1, a2, a3, a4, n):
         i += 1
 
 if __name__ == "__main__":
+    try:
+        if len(sys.argv) == 2 and sys.argv[1][0] == '-' and sys.argv[1][1] == 'h':
+            usage()
+        if len(sys.argv) != 8:
+            exit(84)
+        opt = int(sys.argv[1])
+        a0 = int(sys.argv[2])
+        a1 = int(sys.argv[3])
+        a2 = int(sys.argv[4])
+        a3 = int(sys.argv[5])
+        a4 = int(sys.argv[6])
+        n = int(sys.argv[7])
 
-    if len(sys.argv) == 2 and sys.argv[1][0] == '-' and sys.argv[1][1] == 'h':
-        usage()
-    if len(sys.argv) != 8:
+        if opt != 1 and opt != 2 and opt != 3:
+            exit(84)
+        if opt == 1:
+            bisection(a0, a1, a2, a3, a4, n)
+        if opt == 2:
+            newton(a0, a1, a2, a3, a4, n)
+        if opt == 3:
+            secante(a0, a1, a2, a3, a4, n)
+    except:
         exit(84)
-    opt = int(sys.argv[1])
-    a0 = int(sys.argv[2])
-    a1 = int(sys.argv[3])
-    a2 = int(sys.argv[4])
-    a3 = int(sys.argv[5])
-    a4 = int(sys.argv[6])
-    n = int(sys.argv[7])
-
-    if opt != 1 and opt != 2 and opt != 3:
-        exit(84)
-    if opt == 1:
-        bisection(a0, a1, a2, a3, a4, n)
-    if opt == 2:
-        newton(a0, a1, a2, a3, a4, n)
-    if opt == 3:
-        secante(a0, a1, a2, a3, a4, n)
