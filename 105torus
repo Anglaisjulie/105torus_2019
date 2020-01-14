@@ -29,9 +29,9 @@ def bisection(a0, a1, a2, a3, a4, n):
     while i < 300:
         xm = (x1 + x2) / 2
         if i <= n:
-            print(f"x = {i} {xm}")
+            print(f"x = {xm}")
         else:
-            print(f"x = {n} {xm:.6f}")
+            print(f"x = {xm:.6f}")
         x3 = (a4 * pow(xm, 4)) + (a3 * pow(xm, 3)) + (a2 * pow(xm, 2)) + (a1 * xm) + a0
         x4 = (a4 * pow(x1, 4)) + (a3 * pow(x1, 3)) + (a2 * pow(x1, 2)) + ((a1 * x1) + a0)
         if (x4 * x3) < 0:
