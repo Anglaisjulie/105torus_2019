@@ -31,10 +31,10 @@ def bisection(a0, a1, a2, a3, a4, n):
         if i <= n:
             print(f"x = {xm}")
         else:
-            print(f"x = {xm:.6f}")
+            print("x = {:.{}f}".format(xm, n))
         x3 = (a4 * pow(xm, 4)) + (a3 * pow(xm, 3)) + (a2 * pow(xm, 2)) + (a1 * xm) + a0
         x4 = (a4 * pow(x1, 4)) + (a3 * pow(x1, 3)) + (a2 * pow(x1, 2)) + ((a1 * x1) + a0)
-        if (x4 * x3) < 0:
+        if (x4 * x3) <= 0:
             x2 = xm
         else:
             x1 = xm
@@ -59,7 +59,7 @@ def newton (a0, a1, a2, a3, a4, n):
             break
         if i == 1:
             print(f"x = {xn:.1f}")
-        print(f"x = {xn:.12f}")
+        print("x = {:.{}f}".format(xn, n))
         xn2 = xn
         i += 1
 
@@ -83,7 +83,7 @@ def secante(a0, a1, a2, a3, a4, n):
         if i == 1:
             print(f"x = {xn:.1f}")
         else:
-            print(f"x = {xn:.8f}")
+            print("x = {:.{}f}".format(xn, n))
         x1 = x2
         x2 = xn
         i += 1
